@@ -1,0 +1,58 @@
+class Repl:
+    dictan = [[], []]
+    end_mark = []
+
+    def add_elem(self, new_element_left_, new_element_right_, new_element_end_mark_):
+        self.dictan[0].append(new_element_left_)
+        self.dictan[1].append(new_element_right_)
+        self.end_mark.append(new_element_end_mark_)
+
+    def perform_repl(self, line):
+        for g in range(len(self.dictan[0])):
+            if self.dictan[0][g] in line:
+                line = line.replace(self.dictan[0][g], self.dictan[1][g], 1)
+                if self.end_mark[g] == 0:
+                    return line, 0
+                else:
+                    return line, 1
+
+    def check_inf(self):
+        for g in range(len(self.dictan[0])):
+            if self.dictan[0][g] in self.dictan[1][g] and end_mark[g] == 0:
+                return 1
+
+
+print(
+    "\nPlease, enter the number of replaces in dictans and this replaces in format:\n line_1\n line_2\n mark_of_end (0 or 1)\n")
+n = int(input())
+end_mark = 0
+repl = Repl
+count = 0
+
+for i in range(n):
+    new_element_left = str(input())
+    new_element_right = str(input())
+    new_element_end_mark = int(input())
+    Repl.add_elem(repl, new_element_left, new_element_right, new_element_end_mark)
+
+print("\nOk, now input the line\n")
+line = str(input())
+
+while True:
+    for g in range(len(repl.dictan[0])):
+        if repl.check_inf(repl) == 1:
+            print("\nError, the line can have infinity size. Please, reset the programm and change input data\n")
+            new_element_end_mark = 0
+            break
+
+    line, end_mark = repl.perform_repl(repl, line)
+    for h in range(len(repl.dictan[0])):
+        if not (repl.dictan[0][h] in line):
+            count = count + 1
+
+    if end_mark == 1 or count == len(repl.dictan[0]):
+        break
+    count = 0
+
+if end_mark == 1 or count == len(repl.dictan[0]):
+    print("Result after using all replaces is:\n", line)
